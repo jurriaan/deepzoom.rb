@@ -1,28 +1,36 @@
-= DEEP ZOOM SLICER
+= Ruby Deep Zoom Tools
+Convert images into the Microsoft Deep Zoom Image (DZI) file format.
 
-Deep Zoom Slicer slices images into several tiles and creates xml descriptor file.
-Sliced images are compatible for use with OpenZoom, Deep Zoom and Seadragon.
+DZI files can be rendered using any of the following software:
+ * Microsoft Silverlight Deep Zoom
+ * Microsoft Seadragon Ajax
+ * Microsoft Seadragon Mobile
+ * Microsoft Live Labs Pivot
+ * OpenZoom
+
+== Requirements
+
+   rmagick gem (tested with version 2.9.0)
 
 == Usage
 
-  require 'deep_zoom'
-  DeepZoom.new('path/to/sample.jpg').slice!
+  require "deepzoom"
+  image_creator = ImageCreator.new
+  image_creator.create("path/to/your/image.jpg", "path/to/your/image.dzi")
 
-Or define custom options:
+Or define custom settings:
+  require "deepzoom"
+  image_creator = ImageCreator.new
 
-  file_options  = { :dir     => 'cropped',
-                    :format  => 'png',
-                    :quality => 80 }
-  slice_options = { :tile_size => 256,
-                    :overlap   => 4 }
+  # Custom settings
+  image_creator.tile_size = 508
+  image_creator.tile_overlap = 2
+  image_creator.tile_format = "png"
+  image_creator.image_quality = 0.5
+  image_creator.copy_metadata = true
 
-  img_path = 'path/to/sample.jpg'
-
-  DeepZoom.new(img_path, file_options).slice!(slice_options)
-
-Remove Deep Zoom created files:
-
-  DeepZoom.new(img_path, file_options).remove_files!
+  # convert
+  image_creator.create("path/to/your/image.jpg", "path/to/your/image.dzi")
 
 == Additional Information
 
@@ -32,10 +40,14 @@ All rights reserved.
 * Author: MESO Web Scapes (www.meso.net)
 * License: MPL 1.1/GPL 3/LGPL 3
 * Meso Homepage: http://www.meso.net/deep_zoom_slicer
-* GitHub: http://github.com/hanssen/deep_zoom_slicer
+* GitHub: http://github.com/openzoom/deepzoom.rb
+* OpenZoom: http://openzoom.org
+* Seadragon Developer: http://seadragon.com/developer
+* Deep Zoom Tools API: http://seadragon.com/developer/creating-content/deep-zoom-tools
 
 Contributor(s):
 * Sascha Hanssen <hanssen@meso.net>
+* Daniel Gasienica <daniel@gasienica.ch>
 
 Software distributed under the License is distributed on an "AS IS" basis,
 WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
@@ -43,4 +55,3 @@ for the specific language governing rights and limitations under the
 License.
 
 Deep Zoom and Seadragon are trademarks or registered trademarks of Microsoft, Inc.
-
